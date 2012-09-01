@@ -1,0 +1,313 @@
+<html>
+
+<head>
+<style>
+	body{
+		font-size: 14px;
+		font-family: Serif,vardana;
+	}
+	.puzzle{
+		border:1px solid gray;
+		border-radius:10%;
+		box-shadow:0px -10px 10px;
+		
+		display:inline-block;
+		margin-top:20px;
+		margin-bottom:20px;
+		margin-left : 20px;
+		padding-top : 20px;
+		padding-bottom : 20px;
+		padding-left:5px;
+		padding-right:5px;
+
+		background-color: gray;
+	
+	}
+	.puzzle .option{	
+		border-radius:5px;
+		box-shadow:0px 3px 10px black;
+		margin-bottom:20px;
+		height:30px;
+
+		background: white;
+		color: black;
+		
+		
+	}
+
+	.puzzle .option:hover{
+		border-radius:5px;
+		box-shadow: 0px 5px 10px black;
+		text-shadow: 0px 5px 11px black;
+		font-size:1.2em;
+		
+	}
+	
+	.puzzle img{	
+		border:1px solid gray;
+		margin: 5px;
+		padding:5px;
+	}
+	
+
+	.puzzle .HintMsg{
+		border-bottom:1px solid black;
+		border-radius:5px;
+		box-shadow: 0px 3px 5px;
+
+		margin:5px;
+		
+		font-weight:bold;
+		
+		
+	}
+	.arrow{
+		width: 0px
+		height: 0px;
+		border-color: red blue green yellow; /*top, right, bottom, and left border*/
+		border-style: solid;
+		border-width: 50px;
+		display:inline-block;	
+}
+	#fade-example{
+		text-align: center;
+		margin:auto;
+		background-color: #C1D1F7;
+		border: 5px solid white;
+		
+}
+.chartWidgetWrap{
+	
+	display : inline-block;
+	
+	padding: 10px;
+}
+.chartWidgetWrap:hover {
+	box-shadow: 3px 3px 10px ;
+}
+</style>
+<!--------------------- CSS -------------------->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css">
+
+<!------------------- JS -------------->
+<script src="./js/libs/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+
+    <script type="text/javascript" src="./js/libs/RGraph/RGraph.common.core.js" ></script>
+	<script src="./js/libs/RGraph/RGraph.common.dynamic.js" ></script>
+    <script src="./js/libs/RGraph/RGraph.common.tooltips.js" ></script>
+    <script type="text/javascript" src="./js/libs/RGraph/RGraph.common.effects.js" ></script>
+	<script type="text/javascript" src="./js/libs/RGraph/RGraph.gauge.js" ></script>
+	<script type="text/javascript" src="./js/libs/RGraph/RGraph.bar.js" ></script>
+	<script src="./js/libs/RGraph/RGraph.hbar.js" ></script>
+<script>
+$(document).ready(function(){
+	var bar = new RGraph.Bar('cvs', [5,4,1,6]);
+	bar.Set('chart.title', 'Most Popular App' );
+	bar.Set('chart.title.color', 'black' );
+	
+	bar.Set('chart.background.barcolor1', 'white' );
+	bar.Set('chart.background.barcolor2', 'white' );
+	
+	bar.Set('chart.background.grid', false );
+	bar.Set('chart.labels', ['A','B','C','D']);
+	bar.Set('chart.colors', ['rgba(0, 0, 0,0.9)']); 
+	bar.Set('chart.labels.colors', ['white'] );
+	bar.Set('chart.ylabels', true );
+	
+	bar.Set('chart.ylabels.colors', ['red'] );
+	bar.Draw();
+	
+	
+	//================
+	var bar1 = new RGraph.Bar('cvs2', [[5,3],[4,2],[1,8],[6,9]]);
+	bar1.Set('chart.title', 'Most Popular App' );
+	bar1.Set('chart.title.color', 'black' );
+	
+	bar1.Set('chart.background.barcolor1', 'white' );
+	bar1.Set('chart.background.barcolor2', 'white' );
+	
+	bar1.Set('chart.background.grid', false );
+	bar1.Set('chart.labels', ['A','B','C','D']);
+	bar1.Set('chart.colors', ['rgba(0, 0, 0,0.9)', 'rgba(255, 100, 200,0.9)']); 
+	bar1.Set('chart.labels.colors', ['white'] );
+	bar1.Set('chart.ylabels', true );
+	
+	bar1.Set('chart.ylabels.colors', ['red'] );
+	bar1.Draw();
+	
+	RGraph.Effects.Fade.In(bar1, {'duration': 300});
+	RGraph.Effects.Bar.Wave( bar1 );
+	
+	// ===============
+	
+	var gauge5 = new RGraph.Gauge('cvs5', 0, 100, 80);
+	gauge5.Set('chart.angles.start', PI - (PI / 8));
+	gauge5.Set('chart.angles.end', TWOPI + (PI / 8));
+	gauge5.Set('chart.text.color', 'black');
+	gauge5.Set('chart.tickmarks.big.color', 'black');
+	gauge5.Set('chart.tickmarks.medium.color', 'black');
+	gauge5.Set('chart.tickmarks.small.color', 'black');
+	gauge5.Set('chart.border.outer', 'red');
+	gauge5.Set('chart.border.inner', 'green');
+	gauge5.Set('chart.colors.ranges', []);
+	
+	gauge5.Set('chart.border.outline', 'black');
+	gauge5.Set('chart.needle.colors', ['red']);
+	gauge5.Set('chart.needle.type', 'line');
+	gauge5.Set('chart.needle.tail', true);
+	gauge5.Set('chart.needle.size', 50);
+	gauge5.Set('chart.centerpin.radius', 0.01);
+	gauge5.Set('chart.title.top', 'App');
+	gauge5.Set('chart.title.top.color', 'black');
+	gauge5.Set('chart.labels.centered', true);
+	gauge5.Set('chart.labels.offset', 7);
+	gauge5.Set('chart.background.color', 'blue');
+	gauge5.Set('chart.border.outer', '#666');
+	gauge5.Set('chart.border.inner', '#333');
+	gauge5.Set('chart.background.gradient', true);
+	gauge5.Set('chart.title.bottom','80');
+	/**
+	* This draws a simple gray circle over the centerpin
+	*/
+	gauge5.ondraw = function myCenterpin (obj)
+	{
+		// This circle becomes the border of the centerpin
+		obj.context.beginPath();
+			obj.context.fillStyle = '#aaa';
+			obj.context.arc(obj.centerx, obj.centery, 10, 0, TWOPI, false);
+		obj.context.fill();
+	}
+	
+	//gauge5.Draw();
+	RGraph.Effects.Gauge.Grow(gauge5);
+	
+	$(".dataChange").click(function(){
+		gauge5.value = 5;
+		RGraph.Effects.Gauge.Grow(gauge5);
+	});
+	
+	//  Display app popularity by #views/clicks.
+	function AppPopularityByViewClick( result ){
+		//Result should come in below format.
+		var result =[ {Name: 'a', Clicks : 15, Views : 14 },
+					  {Name: 'b', Clicks : 11, Views : 18 },
+					  {Name: 'c', Clicks : 19, Views : 10 },
+					  {Name: 'd', Clicks : 58, Views : 35 }
+					];
+					
+					
+		function calculateDataLabels(data,labels, result){
+		
+			$.each( result, function( index,v ){
+					data.push( [ v.Clicks, v.Views ] );
+					labels.push( v.Name );
+			});
+			return;
+		}
+		
+		function calculateTooltips(tooltips, data, labels){
+			for( var v = 0 ; v < labels.length; v++ ){
+				tooltips.push( data[v][0] + ' Clicks on ' + labels[v]);
+				tooltips.push( 'Views' );
+			}
+		}
+		
+		
+		
+		
+		//The data that is to be represented on the chart
+        var data = [];
+        var labels = [];
+		var tooltips = [];
+		
+		calculateDataLabels(data, labels, result);
+		calculateTooltips(tooltips, data, labels);
+		
+        // To show a stacked or grouped chart each element of the data array should itself
+        // be an array containing the data to be shown.
+        // var data = [[120,80,60],[30,12,13],[50,50,33]];
+    
+        // Create the HBar object giving it the canvas ID and the data just defined.
+        var hbar = new RGraph.HBar('appsbyPopularity', data);
+        
+        // Configure the chart to appear as wished.
+        hbar.Set('chart.labels', labels );
+        hbar.Set('chart.gutter.left', 45);
+        hbar.Set('chart.background.barcolor1', 'blue');
+        hbar.Set('chart.background.barcolor2', 'blue');
+        hbar.Set('chart.background.grid', true);
+        hbar.Set('chart.colors', ['lime', 'green']);
+        hbar.Set('chart.labels.above', labels);
+		hbar.Set('chart.background.grid', false);
+        hbar.Set('chart.title', 'Clicks/Views per App');
+		
+		if (!RGraph.isOld()) {
+				hbar.Set('chart.tooltips', tooltips);
+                hbar.Set('chart.tooltips.event', 'onmousemove');
+            }
+			
+		// Now call the .Draw() method to draw the chart.
+			
+        hbar.Draw();
+		
+		// Data change update..
+		$(".dataChange").click(function(){
+			hbar.data[0][0] = 10;
+			RGraph.Effects.HBar.Grow(hbar);
+		});
+	}
+	
+	AppPopularityByViewClick('');
+});
+</script>
+</head>
+<body>
+	
+		<div id="one" data-role = "page" data-theme = "a">
+			<div  data-role="header">
+					<a href="#two" data-role = 'button' data-transition = "flip"> User stats </a>
+					<a data-role = 'button' class="dataChange"> Data change </a>
+					<h1> App Stats </h1>
+				</div> 
+				<div  data-role="content">
+					<div class = "chartWidgetWrap" >
+						<div class="chartdiv">
+							 <canvas id="cvs" width="200" height="200">[No canvas support]</canvas>
+						</div>
+					</div>
+					
+					<div class = "chartWidgetWrap" >
+						<div class="chartdiv">
+							 <canvas id="cvs5" width="200" height="200">[No canvas support]</canvas>
+						</div>
+					</div>
+					
+					<div class = "chartWidgetWrap" >
+						<div class="chartdiv">
+							 <canvas id="appsbyPopularity" width="400" height="200">[No canvas support]</canvas>
+						</div>
+					</div>
+				</div> 
+				<div  data-role="footer">
+					<h1> All right reserved </h1>
+				</div> 
+		</div>
+		<div id="two" data-role = "page" data-theme = "a">
+			<div  data-role="header">
+					<a href="#one" data-role = 'button' data-transition = "flip"> User stats </a>
+					<h1> App Stats </h1>
+			</div> 
+			<div  data-role="content">
+				<div class = "chartWidgetWrap" >
+					<div class="chartdiv">
+						 <canvas id="cvs2" width="250" height="250">[No canvas support]</canvas>
+					</div>
+				</div>
+			</div> 
+			<div  data-role="footer">
+				<h1> All right reserved </h1>
+			</div> 
+		</div>
+	</body>
+</html>
