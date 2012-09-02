@@ -163,7 +163,7 @@
 	
 		<div id="one" data-role = "page" data-theme = "a">
 			<div  data-role="header">
-					<a href="#two" data-role = 'button' data-transition = "flip"> User stats </a>
+					<a href="#help" data-role = 'button' data-transition = "flip" style="float:right;"> Help </a>
 					<a data-role = 'button' class="dataChange" id="change"> Data change </a>
 					<h1> App Stats </h1>
 				</div> 
@@ -171,7 +171,7 @@
 					<div class="firstRow" >
 						<div class = "chartWidgetWrap" >
 							<div  class="appCountDiv chartdiv" style="text-align:center">
-								 <div class="head"> Total Apps</div>
+								 <div class="head"> Total Apps </div>
 								 <div id="appCount" class="count"></div>
 							</div>
 						</div>
@@ -187,7 +187,6 @@
 							</div>
 						</div>
 						
-						
 						<div class = "chartWidgetWrap" >
 							<div class="siteCountDiv chartdiv" style="text-align:center">
 								 <div class="head"> Total Sites </div>
@@ -198,9 +197,52 @@
 					
 				</div> 
 				<div  data-role="footer">
-					<h1> All right reserved </h1>
+					<h1> POC Purpose Only </h1>
 				</div> 
 		</div>
-		
+		<div id="help" data-role = "page" data-theme = "a">
+			<div  data-role="header">
+					<a href="#one" data-role = 'button' data-transition = "flip"> Back </a>
+					<h1> HELP </h1>
+			</div>
+			<div  data-role="content">
+				<ul>
+					<li>
+						<h3> Introduction </h3>  
+						<p> This application is built for below proof of concept (POC) only.</p>
+						<ul>
+							<li> To show Dashboard/Reporting </li>
+							<li> Real time update of the dashboard and charts. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> Technoloty used </h3>
+						<ul>
+							<li> JQuery and JQuery Mobile - To have easy event handling and UI. </li>
+							<li> Google Visualization API - To generate the Chart elements. I also tried RGraph, it was also good although. </li>
+							<li> PHP - Server side languege to connect to database and feed the data. </li>
+							<li> MySQL - Open source Database to store the data. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> Assumptions </h3>
+						<ul>
+							<li> I have utilized Google Charts instead of creating custom widget for our usage, Since app is for POC purpose only. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> How to use </h3>
+						<ol>
+							<li> Open the page1.html in one window. </li>
+							<li> Open the page2.html in another window. </li>
+							<li> Make an entry in DB from page2.html. The change will get reflected in the page1.html charts, without refreshing page. </li>
+						</ol>
+					</li>
+				</ul>
+			</div>
+			<div  data-role="footer">
+				<h1> POC Purpose Only </h1>
+			</div> 
+		</div>
 	</body>
 </html>
