@@ -40,6 +40,42 @@
 <script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript" >
+$(document).ready(function(){
+	$('#AddData').click(OnAddRecord);
+}); 
+function OnAddRecord() {
+	var url = "http://localhost/webs/FreeLanceProjects/Freelance-Reporting/script/ChartFeeder.php?ChartType=AddApplication";
+	
+	var name = $('#name').val();
+	if(name != 'undefined' && name.length > 0)
+		url += "&name="+ name;
+		
+	var action = $('#select-action-0').val();
+	if(action != 'undefined' && action.length > 0){
+			url += '&action=' + action;
+			
+	var date = $('#date').val();
+	if(action != 'undefined'  && date.length > 0){
+		url += '&date=' + date;
+		
+	var time = $('#time').val();
+	if( time != 'undefined' && time.length > 0){
+		url += '&time=' + time;
+		
+	var userId = $('#userid').val();
+	if( userId != 'undefined' && userId.length > 0){
+		url += '&userid=' + userId;
+	
+	var site = $('#site').val();
+	if( site != 'undefined' && site.length > 0){
+		url += '&site=' + site;
+	
+	// Post request when all the parameters entered by user
+	$.post(url, function(data) {
+	  alert(data);
+	});
+	}}}}}
+};
 
 </script>
 </head>
@@ -60,8 +96,8 @@
 					</div>
 										
 					<div data-role="fieldcontain">
-						<label for="select-choice-0" class="select">Action taken:</label>
-						<select name="select-choice-0" id="select-choice-0">
+						<label for="select-action-0" class="select">Action taken:</label>
+						<select name="select-action-0" id="select-action-0">
 						   <option value="View">View</option>
 						   <option value="Click">Click</option>
 						</select>
@@ -69,24 +105,24 @@
 					
 					<div data-role="fieldcontain">
 						<label for="date">Date</label>
-						<input type="text" name="date" id="date" value="YYYY-MM-DD"  />
+						<input type="Date" name="date" id="date" value="YYYY-MM-DD"  />
 					</div>
 					
 					<div data-role="fieldcontain">
-						<label for="Time">Time</label>
-						<input type="Time" name="Time" id="Time" value="HH:MM"  />
+						<label for="time">Time</label>
+						<input type="Time" name="time" id="time" value="HH:MM"  />
 					</div>
 					
 					<div data-role="fieldcontain">
-						<label for="Site">Site</label>
-						<input type="Site" name="Site" id="Site" value=""  />
+						<label for="site">Site</label>
+						<input type="text" name="site" id="site" value=""  />
 					</div>
 					<div data-role="fieldcontain">
-						<label for="Userid">User ID:</label>
-						<input type="text" name="Userid" id="Userid" value=""  />
+						<label for="userid">User ID:</label>
+						<input type="text" name="userid" id="userid" value=""  />
 					</div>
 					
-					<input type="button" value="Add details" />
+					<input type="button" id="AddData" value="Add details" />
 				</div> 
 				<div  data-role="footer">
 					<h1>For POC Purpose Only </h1>
