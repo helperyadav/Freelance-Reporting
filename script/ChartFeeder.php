@@ -16,16 +16,16 @@
 	 $RequestType = getParam("ChartType");
 	 
 	 if($RequestType == 'Apppopularity' )
-	 {
+	 {// Send Application's data to client.
 		GetAppPopularity();
 	 }else if($RequestType == 'SitePopularity' )
-	 {
+	 {// send sites popularity data to client
 		GetSitePopularity();
 	 }else if($RequestType == 'TotalApps' )
-	 {
+	 {// retrieve total number of applications from data base.
 		GetTotalApps();
 	 }else if($RequestType == 'TotalSites' )
-	 {
+	 {// retrieve total number of sites from data base.
 		GetTotalSites();
 	 } else if ($RequestType == 'AllData' )
 	 {
@@ -40,7 +40,11 @@
 mysql_close($con); // Close the sql connection.
 
 
-
+/*
+ *This funcption will insert a record for application table.
+ * required parameters in the request are 
+ * 1. application name, 2. date  3. time, 4. action 5. site and 6 user id. 
+ */
 function AddApplicationData($con)
 {
 	$appname = getParam('name');
@@ -49,8 +53,6 @@ function AddApplicationData($con)
 	$action = getParam('action');
 	$site = getParam('site');
 	$userId = getParam('userid');
-	
-	//if(!appname || 
 	
 	$sql = "INSERT INTO `appreporting`.`application` (`name`, `date`, `time`, `action`, `site`, `user_id`)"
 			. "VALUES ('$appname','$date','$time','$action','$site','$userId');";
@@ -65,6 +67,9 @@ function AddApplicationData($con)
 
 }
 
+/*
+ * a generic function to return status of the action.
+ */
 function ReturnError( $Status, $ErrorMsg)
 {
 	echo('{"Staus": '. $Status .', "Message":'. $ErrorMsg .'}');
@@ -161,31 +166,27 @@ function getCountforSite($table, $site_name, $action)
 	 
 function GetAppPopularity(  )
 {
-	$sql = "SELECT COUNT( * ) AS `campaigns` , `application` \n"
-    . "FROM `campaign` \n"
-    . "GROUP BY `application` \n"
-    . "ORDER BY `application` \n"
-    . "";
+	$sql = "SELECT COUNT(*) AS `Rows`, `name` FROM `application` GROUP BY `name` ORDER BY `name` ";
 	
 	$result = mysql_query($sql);
 	$rowCount = 0;
 
-	  echo '[';
-	  echo '["Apps", "Clicks", "Views"]';
-	  while ($row = mysql_fetch_array($result)) {
-			// Retrieve views count for this app
-			$VCounts = getCountfor( 'application', $row['application'] ,  'view');
+	echo '[';
+	echo '["Apps", "Clicks", "Views"]';
+	while ($row = mysql_fetch_array($result)) {
+		// Retrieve views count for this app
+		$VCounts = getCountfor( 'application', $row['name'] ,  'view');
 
-			// Retrieve click count for this app
-			$CCounts =  getCountfor( 'application', $row['application'] ,  'click');
+		// Retrieve click count for this app
+		$CCounts =  getCountfor( 'application', $row['name'] ,  'click');
 
-		  echo ',[' . json_encode( $row['application'] )
-					. ', ' . $CCounts
-					. ', ' . $VCounts
-					. ']';
+	  echo ',[' . json_encode( $row['name'] )
+				. ', ' . $CCounts
+				. ', ' . $VCounts
+				. ']';
 
-		$rowCount = $rowCount + 1;
-	  }
+	$rowCount = $rowCount + 1;
+	}
 	echo ']';
 }  
 

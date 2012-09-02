@@ -45,20 +45,34 @@
 	  //Charts holder
 	  var appPopular;
 	  var sitePopular;
+	  var StateManager = {
+			
+			isTotalAppsDataReady : false,
+			isTotalSitesDataReady : false,
+			isApppopularityDataReady : false,
+			isSitePopularityDataReady : false,
+			
+			unBlockUI : function(){
+				if( this.isTotalAppsDataReady && this.isTotalSitesDataReady && this.isApppopularityDataReady && this.isSitePopularityDataReady ){
+					$.mobile.pageLoading( true );
+					$('#one div.firstRow').show('fast');
+				}	
+			}
+	  };
 	  
       function drawChart() {
+		$('#one div.firstRow').hide();
+		$.mobile.pageLoading( false );
 		
 		appPopular = new AppPopularityByViewClick('appByViews', '');
-		
-		
 		sitePopular = new SitePopularityByViewClick('siteByViews', '');
 		
 		sitePie = new sitePieChart('sitePieChart', 'Site', '');
 		
 		appPie = new sitePieChart('appPieChart', 'Application', '');
 		
-		totalApps( 10 );
-		totalSites( 20 );
+		//totalApps( 10 );
+		//totalSites( 20 );
 		
 		
 		//Call ajax here. and get all data.. and then call respective chart draw function for each widget.
@@ -77,6 +91,9 @@
 					});
 					appPie.result = res;
 					appPie.drawChart();
+					
+					StateManager.isTotalAppsDataReady = true;
+					StateManager.unBlockUI();
 			});
 			
 			// ============== Get Total Sites ============			
@@ -91,6 +108,9 @@
 					});
 					sitePie.result = res;
 					sitePie.drawChart();
+					
+					StateManager.isTotalSitesDataReady = true;
+					StateManager.unBlockUI();
 			});
 			
 			//============== Get App Popularity ============
@@ -100,6 +120,9 @@
 				function( data ) {
 					appPopular.result = data;
 					appPopular.drawChart();
+					
+					StateManager.isApppopularityDataReady = true;
+					StateManager.unBlockUI();
 			});
 			
 			// ============== Get Site Popularity ==========
@@ -108,6 +131,9 @@
 				function( data ) {
 					sitePopular.result = data;
 					sitePopular.drawChart();
+					
+					StateManager.isSitePopularityDataReady = true;
+					StateManager.unBlockUI();
 			});
 			
 		}, 2000);
@@ -286,7 +312,7 @@
 					<h1> App Stats </h1>
 				</div> 
 				<div  data-role="content">
-					<div class="firstRow" >
+					<div class="firstRow" style="display:none;">
 						<div class = "chartWidgetWrap" >
 							<div  class="appCountDiv chartdiv" style="text-align:center">
 								 <div class="head"> Total Apps </div>
@@ -312,7 +338,7 @@
 							</div>
 						</div>
 						
-						<hr>
+						<hr style='opacity: 0.5;margin-top:10px;margin-bottom:10px;'>
 						
 						<div  class='infobox' >
 							<div  class="appCountDiv chartdiv" style="text-align:center">
@@ -356,7 +382,7 @@
 						</ul>
 					</li>
 					<li>
-						<h3> Technoloty used </h3>
+						<h3> Technology used </h3>
 						<ul>
 							<li> JQuery and JQuery Mobile - To have easy event handling and UI. </li>
 							<li> Google Visualization API - To generate the Chart elements. I also tried RGraph, it was also good although. </li>
@@ -368,7 +394,7 @@
 						<h3> Assumptions </h3>
 						<ul>
 							<li> I have utilized Google Charts instead of creating custom widget for our usage, Since app is for POC purpose only. </li>
-							<li> Multiple charts are posible to create and update on runtime, However chosen the barchart to for POC. </li>
+							<li> Multiple charts are posible to create and update on runtime, However chosen the barchart/piechart for POC. </li>
 						</ul>
 					</li>
 					<li>

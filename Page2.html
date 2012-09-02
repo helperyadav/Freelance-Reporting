@@ -1,0 +1,143 @@
+<html>
+
+<head>
+<style>
+	body{
+		font-size: 14px;
+		font-family: Serif,vardana;
+	}
+.chartWidgetWrap, .infobox{ 
+	display : inline-block;
+	padding: 10px;
+	vertical-align: top;
+}
+.chartWidgetWrap:hover {
+	box-shadow: 3px 3px 10px;
+}
+
+.appCountDiv, .siteCountDiv{
+	width: 200px;
+	height: 200px;
+	text-align : center;
+	vertical-align : middle;
+}
+.appCountDiv div.head, .siteCountDiv div.head{
+	color: white;
+}
+.appCountDiv div.count, .siteCountDiv div.count{
+	margin-top: 60px;
+	font-size: 5em;
+}
+.firstRow{
+	width: 100%;
+}
+</style>
+<!--------------------- CSS -------------------->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css">
+
+<!------------------- JS -------------->
+<script src="./js/libs/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" >
+
+</script>
+</head>
+<body>
+	
+		<div id="one" data-role = "page" data-theme = "a">
+			<div  data-role="header">
+					<a href="#help" data-role = 'button' data-transition = "slide" style="float:right;"> Help </a>
+					<a data-role = 'button' class="dataChange" id="change"> Add Application </a>
+					<h1> Add Application Data </h1>
+				</div> 
+				
+				<div  data-role="content" >
+				
+					<div data-role="fieldcontain">
+						<label for="name">Application Name:</label>
+						<input type="text" name="name" id="name" value=""  />
+					</div>
+										
+					<div data-role="fieldcontain">
+						<label for="select-choice-0" class="select">Action taken:</label>
+						<select name="select-choice-0" id="select-choice-0">
+						   <option value="View">View</option>
+						   <option value="Click">Click</option>
+						</select>
+					</div>
+					
+					<div data-role="fieldcontain">
+						<label for="date">Date</label>
+						<input type="text" name="date" id="date" value="YYYY-MM-DD"  />
+					</div>
+					
+					<div data-role="fieldcontain">
+						<label for="Time">Time</label>
+						<input type="Time" name="Time" id="Time" value="HH:MM"  />
+					</div>
+					
+					<div data-role="fieldcontain">
+						<label for="Site">Site</label>
+						<input type="Site" name="Site" id="Site" value=""  />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="Userid">User ID:</label>
+						<input type="text" name="Userid" id="Userid" value=""  />
+					</div>
+					
+					<input type="button" value="Add details" />
+				</div> 
+				<div  data-role="footer">
+					<h1>For POC Purpose Only </h1>
+				</div> 
+		</div>
+		<div id="help" data-role = "page" data-theme = "a">
+		
+			<div  data-role="header">
+					<a href="#one" data-role = 'button' data-transition = "slide"> Back </a>
+					<h1> HELP </h1>
+			</div>
+			<div  data-role="content">
+				<ul>
+					<li>
+						<h3> Introduction </h3>  
+						<p> This application is built for below proof of concept (POC) only.</p>
+						<ul>
+							<li> To show Dashboard/Reporting </li>
+							<li> Real time update of the dashboard and charts. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> Technoloty used </h3>
+						<ul>
+							<li> JQuery and JQuery Mobile - To have easy event handling and UI. </li>
+							<li> Google Visualization API - To generate the Chart elements. I also tried RGraph, it was also good although. </li>
+							<li> PHP - Server side languege to connect to database and feed the data. </li>
+							<li> MySQL - Open source Database to store the data. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> Assumptions </h3>
+						<ul>
+							<li> I have utilized Google Charts instead of creating custom widget for our usage, Since app is for POC purpose only. </li>
+							<li> Multiple charts are posible to create and update on runtime, However chosen the barchart to for POC. </li>
+						</ul>
+					</li>
+					<li>
+						<h3> How to use </h3>
+						<ol>
+							<li> Open the page1.html in one window. </li>
+							<li> Open the page2.html in another window. </li>
+							<li> Make an entry in DB from page2.html. The change will get reflected in the page1.html charts, without refreshing page. </li>
+						</ol>
+					</li>
+				</ul>
+			</div>
+			<div  data-role="footer">
+				<h1> POC Purpose Only </h1>
+			</div> 
+		</div>
+	
+</body>
+</html>
