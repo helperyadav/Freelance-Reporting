@@ -30,10 +30,40 @@
 	 } else if ($RequestType == 'AllData' )
 	 {
 		GetAllData();
-	 }else ReturnError("Fail", "Invalid Chart Type");
+	 } else if ($RequestType == 'AddApplication' )
+	 {
+		AddApplicationData($con);
+	 }
+	 else ReturnError("Fail", "Invalid Chart Type");
 
  
 mysql_close($con); // Close the sql connection.
+
+
+
+function AddApplicationData($con)
+{
+	$appname = getParam('name');
+	$date = getParam('date');
+	$time = getParam('time');
+	$action = getParam('action');
+	$site = getParam('site');
+	$userId = getParam('userid');
+	
+	//if(!appname || 
+	
+	$sql = "INSERT INTO `appreporting`.`application` (`name`, `date`, `time`, `action`, `site`, `user_id`)"
+			. "VALUES ('$appname','$date','$time','$action','$site','$userId');";
+	
+	$result = mysql_query($sql);
+
+	if (!mysql_query($sql,$con))
+	{
+		die('Error: ' . mysql_error());
+	}
+	echo "record added succesfully.";
+
+}
 
 function ReturnError( $Status, $ErrorMsg)
 {
