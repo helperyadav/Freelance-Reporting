@@ -47,15 +47,71 @@
 	  var sitePopular;
 	  
       function drawChart() {
-		//Call ajax here. and get all data.. and then call respective chart draw function for each widget.
-		appPopular = new AppPopularityByViewClick('appByViews', '');
-		appPopular.drawChart();
 		
-		sitePopular = new SitePopularityByViewClick('siteByViews','');
-		sitePopular.drawChart();
+		appPopular = new AppPopularityByViewClick('appByViews', '');
+		
+		
+		sitePopular = new SitePopularityByViewClick('siteByViews', '');
+		
+		sitePie = new sitePieChart('sitePieChart', 'Site', '');
+		
+		appPie = new sitePieChart('appPieChart', 'Application', '');
 		
 		totalApps( 10 );
 		totalSites( 20 );
+		
+		
+		//Call ajax here. and get all data.. and then call respective chart draw function for each widget.
+		setInterval(function() {
+			// Do something every 2 seconds
+			
+			//================ Get TOTAL APPS ============
+			$.getJSON( '/webs/FreeLanceProjects/Freelance-Reporting/script/ChartFeeder.php',
+				{ 'ChartType' : 'TotalApps'},
+				function(data) {
+					totalApps( data.length );
+					
+					res = [['Application', 'Count']];
+					$.each( data, function(index, val ){
+						res.push( [val.application, parseInt( val.count )] );
+					});
+					appPie.result = res;
+					appPie.drawChart();
+			});
+			
+			// ============== Get Total Sites ============			
+			$.getJSON( '/webs/FreeLanceProjects/Freelance-Reporting/script/ChartFeeder.php',
+				{ 'ChartType' : 'TotalSites'},
+				function(data) {
+					totalSites( data.length );
+					
+					res = [['Sites', 'Count']];
+					$.each( data, function(index, val ){
+						res.push( [val.site, parseInt( val.count )] );
+					});
+					sitePie.result = res;
+					sitePie.drawChart();
+			});
+			
+			//============== Get App Popularity ============
+			
+			$.getJSON( '/webs/FreeLanceProjects/Freelance-Reporting/script/ChartFeeder.php',
+				{ 'ChartType' : 'Apppopularity'},
+				function( data ) {
+					appPopular.result = data;
+					appPopular.drawChart();
+			});
+			
+			// ============== Get Site Popularity ==========
+			$.getJSON( '/webs/FreeLanceProjects/Freelance-Reporting/script/ChartFeeder.php',
+				{ 'ChartType' : 'SitePopularity'},
+				function( data ) {
+					sitePopular.result = data;
+					sitePopular.drawChart();
+			});
+			
+		}, 2000);
+		
       }
 	  $(document).ready( function(){
 		$( '#change' ).click(function(){
@@ -64,6 +120,9 @@
 			
 			sitePopular.result.push( ['rrr', 10, 51]);
 			sitePopular.drawChart();
+			
+			sitePie.result.push( ['rrr', 10, 51]);
+			sitePie.drawChart();
 		});
 	  });
 
@@ -109,7 +168,7 @@
 			}
 		}
 		
-		function SitePopularityByViewClick( elem, result ){
+		function SitePopularityByViewClick( elem, title, result ){
 			
 			if( this.chart == undefined )
 				this.chart = new google.visualization.ColumnChart(document.getElementById(elem));
@@ -117,7 +176,7 @@
 			if( this.options === undefined ){
 				this.options = {
 				  title: 'Site Popularity by views/clicks',
-				  hAxis: {title: 'Sites', titleTextStyle: {color: 'white', 'font-size':24}},
+				  hAxis: {title: title, titleTextStyle: {color: 'white', 'font-size':24}},
 				  chartArea: { 
 					  height: '200px',
 					  width: '500px'
@@ -150,12 +209,67 @@
 		}
 		
 		function totalApps( count ){
-			$('#appCount')
-				.text ( count);
+			var elem = $('#appCount');
+			
+			if( count == parseInt( elem.text () ) )
+				return;
+			
+			elem.animate({'font-size':'2em'}, 'fast', function(){
+				elem.text( count );
+				elem.animate({'font-size':'5em'}, 'fast', function(){});
+			});
 		}
 		
 		function totalSites( count ){
-			$('#siteCount').text ( count);
+			var elem = $('#siteCount');
+			
+			if( count == parseInt( elem.text () ) )
+				return;
+			
+			elem.animate({'font-size':'2em'}, 'fast', function(){
+				elem.text( count );
+				elem.animate({'font-size':'5em'}, 'fast', function(){});
+			});
+		}
+		
+		function sitePieChart(elem,title, result){
+			if( this.chart == undefined )
+				this.chart = new google.visualization.PieChart(document.getElementById(elem));
+			
+			if( this.options === undefined ){
+				this.options = {
+				  title: title,
+				  is3D: true,
+				  backgroundColor:'#666',
+				  height:'200px',
+				  width:'50%',
+				  chartArea: { 
+					  height: '200px',
+					  width: '50%'
+				  },
+				  legend : {
+					position:'in'
+				  }
+				};
+			}
+			
+			//Result should come in below format.
+			if( this.result === undefined )
+			this.result =  [
+					['Task', 'Hours per Day'],
+					['Work', 11],
+					['Eat', 2],
+					['Commute', 2],
+					['Watch TV', 2],
+					['Sleep', 7]
+				  ];
+					
+			this.data = google.visualization.arrayToDataTable( this.result );
+			this.drawChart = function(){
+				var data = google.visualization.arrayToDataTable( this.result );
+				this.chart.draw(data, this.options);
+			}
+		
 		}
     </script>
 </head>
@@ -163,7 +277,7 @@
 	
 		<div id="one" data-role = "page" data-theme = "a">
 			<div  data-role="header">
-					<a href="#help" data-role = 'button' data-transition = "flip" style="float:right;"> Help </a>
+					<a href="#help" data-role = 'button' data-transition = "slide" style="float:right;"> Help </a>
 					<a data-role = 'button' class="dataChange" id="change"> Data change </a>
 					<h1> App Stats </h1>
 				</div> 
@@ -172,7 +286,7 @@
 						<div class = "chartWidgetWrap" >
 							<div  class="appCountDiv chartdiv" style="text-align:center">
 								 <div class="head"> Total Apps </div>
-								 <div id="appCount" class="count"></div>
+								 <div id="appCount" class="count">0</div>
 							</div>
 						</div>
 						
@@ -190,9 +304,31 @@
 						<div class = "chartWidgetWrap" >
 							<div class="siteCountDiv chartdiv" style="text-align:center">
 								 <div class="head"> Total Sites </div>
-								 <div id="siteCount" class="count"></div>
+								 <div id="siteCount" class="count">0</div>
 							</div>
 						</div>
+						
+						<hr>
+						
+						<div class = "chartWidgetWrap" >
+							<div  class="appCountDiv chartdiv" style="text-align:center">
+								Charts are updated with new stats every 2000ms.
+							</div>
+						</div>
+						
+						<div class = "chartWidgetWrap" >
+							<div class="chartdiv" style="text-align:center">
+								 <div id="appPieChart" ></div>
+							</div>
+						</div>
+						
+						<div class = "chartWidgetWrap" >
+							<div class="chartdiv" style="text-align:center">
+								 <div id="sitePieChart" ></div>
+							</div>
+						</div>
+						
+						
 					</div>
 					
 				</div> 
@@ -202,7 +338,7 @@
 		</div>
 		<div id="help" data-role = "page" data-theme = "a">
 			<div  data-role="header">
-					<a href="#one" data-role = 'button' data-transition = "flip"> Back </a>
+					<a href="#one" data-role = 'button' data-transition = "slide"> Back </a>
 					<h1> HELP </h1>
 			</div>
 			<div  data-role="content">
@@ -228,6 +364,7 @@
 						<h3> Assumptions </h3>
 						<ul>
 							<li> I have utilized Google Charts instead of creating custom widget for our usage, Since app is for POC purpose only. </li>
+							<li> Multiple charts are posible to create and update on runtime, However chosen the barchart to for POC. </li>
 						</ul>
 					</li>
 					<li>
